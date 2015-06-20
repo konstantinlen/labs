@@ -1,10 +1,36 @@
-{
-    "_id" : ObjectId("55414012d83ca7aefbad8aa5"),
+1) db.items.insert ({
+    
     "category" : "Phone",
-    "model" : "Nokia N81",
+    "model" : "Nokia 7354",
     "Producer" : "Nokia",
-    "Price" : 800
-}
+    "Price" : 700
+},
+
+{
+    
+    "category" : "Tablet",
+    "model" : "Mini",
+    "Producer" : "Ipad",
+    "Price" : 1800
+},
+
+{
+    
+    "category" : "PC",
+    "model" : "Lattitude3",
+    "Producer" : "dell",
+    "Price" : 4000
+},
+
+{
+    
+    "category" : "PC",
+    "model" : "4540",
+    "Producer" : "HP",
+    "Price" : 5000
+})
+2) db.items.find () 
+
 
 3) db.items.find({Price:{$gt:1000, $lt:2500}})
 
@@ -17,18 +43,19 @@
 
 ************
 
-{
-    "_id" : ObjectId("554168c14409f9ed285b7e7c"),
+1) db.orders.insert  ({
+    
     "order_number" : 1,
-    "total_sum" : 1600,
+	"date" : ISODate("2015-04-07T00:00:00.000Z"),
+    "total_sum" : 1800,
     "customer" : {
-        "name" : "D",
+        "name" : "Dan",
         "surname" : "B",
-        "phone" : 123457,
+        "phone" : 1213457,
         "address" : "Kyiv"
     },
     "payment" : {
-        "card_owner" : "D B",
+        "card_owner" : "Dan B",
         "cardId" : 121212
     },
     "order_items_id" : [ 
@@ -41,7 +68,64 @@
             "$id" : ObjectId("55414012d83ca7aefbad8aa5")
         }
     ]
+},
+
+{
+    
+    "order_number" : 2,
+	"date" : ISODate("2015-05-09T00:00:00.000Z"),
+    "total_sum" : 600,
+    "customer" : {
+        "name" : "Jack",
+        "surname" : "B",
+        "phone" : 1234547,
+        "address" : "Kyiv"
+    },
+    "payment" : {
+        "card_owner" : "Jack B",
+        "cardId" : 121214
+    },
+    "order_items_id" : [ 
+        {
+            "$ref" : "items",
+            "$id" : ObjectId("55414012d83ca7aefbad8aa5")
+        }, 
+        {
+            "$ref" : "items",
+            "$id" : ObjectId("55414012d83ca7aefbad8aa5")
+        }
+    ]
+},
+
+{
+    
+    "order_number" : 3,
+	"date" : ISODate("2015-07-12T00:00:00.000Z"),
+    "total_sum" : 2000,
+    "customer" : {
+        "name" : "Ray",
+        "surname" : "C",
+        "phone" : 157357,
+        "address" : "Kyiv"
+    },
+    "payment" : {
+        "card_owner" : "Ray C",
+        "cardId" : 121214
+    },
+    "order_items_id" : [ 
+        {
+            "$ref" : "items",
+            "$id" : ObjectId("55414012d83ca7aefbad8aa5")
+        }, 
+        {
+            "$ref" : "items",
+            "$id" : ObjectId("55414012d83ca7aefbad8aa5")
+        }
+    ]
 }
+
+
+)
 
 
 
@@ -58,92 +142,3 @@
 7) db.persons.update({"customer.name":"D"}, {"customer.name":"Drth"}, {upsert: true})
 
 
-
-http://metanit.com/nosql/mongodb/2.9.php
-
-http://stackoverflow.com/questions/21592060/mongodb-manual-references-example
-
-
-
-
-
-
-гит
-
-
-Создание Git-репозитория
-
-$ git init
-
-git add - если папка не пустая (Если вы хотите добавить под версионный контроль существующие файлы (в отличие от пустого каталога), вам стоит проиндексировать эти файлы и осуществить первый коммит изменений. )
-
-$ git commit -m 'initial project version'
-
-$ git clone https://github.com/libgit2/libgit2
-
-
-вносить изменения, просматривать изменения, отменять изменения
-
-
-$ git status
-
-для теста
-$ echo 'My Project' > README
-$ git status
-
-http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-Recording-Changes-to-the-Repository
-
-git diff - детальный просмотр
-
-$ git diff --staged
-
-$ git commit -m "Story 182: Fix benchmarks for speed"
-
-$ rm PROJECTS.md - удалить
-
-$ git mv file_from file_to - перемещать/переименовывать
-
-
-Просматривать историю изменений, выводить граф изменений
-
-
-http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-%D0%9F%D1%80%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8-%D0%BA%D0%BE%D0%BC%D0%BC%D0%B8%D1%82%D0%BE%D0%B2
-
-$ git log
-
-$ git log -p -2
-
-$ git log --stat
-
-$ git log --pretty=format:"%h %s" --graph
-
-
-отменять изменения
-
-
-http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D0%BE%D1%82%D0%BC%D0%B5%D0%BD%D1%8B
-
-$ git commit --amend
-
-
-пример - Например, если вы фиксируете изменения, и понимаете, что забыли проиндексировать изменения в файле, который хотели включить в коммит, можно сделать примерно так:
-$ git commit -m 'initial commit'
-$ git add forgotten_file
-$ git commit --amend
-
-В итоге получится единый коммит — второй коммит заменит результаты первого.
-
-$ git add .
-$ git status
-$ git reset HEAD <file>...
-
-$ git checkout -- CONTRIBUTING.md
-
-
-удаленные репрозитории
-
-git fetch — забрать изменения удаленной ветки из репозитория по умолчания, основной ветки; той, которая была использована при клонировании репозитория. Изменения обновят удаленную ветку (remote tracking branch), после чего надо будет провести слияние с локальной ветку командой git merge.
-Команда git pull сразу забирает изменения и проводит слияние с активной веткой.
-
-http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-Working-with-Remotes
-http://git-scm.com/book/ru/v2/%D0%92%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-Git-%D0%9E-%D0%B2%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B8-%D0%B2-%D0%B4%D0%B2%D1%83%D1%85-%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%85

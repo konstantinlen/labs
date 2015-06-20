@@ -1,4 +1,4 @@
-////////////////////////_TASK1_///////////////////////////
+1)
 
 var mapFunc = function () {
         emit(this.producer,1)
@@ -14,17 +14,17 @@ db.goods.mapReduce(
     { out : "mrResult"}
 );
 
-////////////////////////_TASK2_///////////////////////////
+2)
 same as previous but 
 emit(this.producer,this.price)
 
-////////////////////////_TASK3_///////////////////////////
+3)
 same as previous but 
 var mapFunc = function () {
         emit(this.customer.name,this.totalSum)
     }
 
-////////////////////////_TASK4_///////////////////////////
+4)
 same as previous but 
 db.orders.mapReduce(
     mapFunc,
@@ -41,7 +41,7 @@ db.orders.mapReduce(
     }
 );
 
-////////////////////////_TASK5_///////////////////////////
+5)
 var mapFunc = function () {
         emit(1,this.totalSum)
     }
@@ -51,7 +51,7 @@ var reduceFunc = function (key,val) {
     }
 
 
-////////////////////////_TASK6_///////////////////////////
+6)
 var mapFunc = function () {
     var arr = this.order_Items_ID;
         arr.forEach( function (item,i,arr) {
@@ -63,7 +63,7 @@ var reduceFunc = function (key,val) {
         return Array.sum(val);
     }
 
-////////////////////////_TASK7_///////////////////////////
+7)
 
 var mapFunc = function () {
     var arr = this.order_Items_ID;
@@ -91,7 +91,7 @@ db.orders.mapReduce(
     }
 );
 
-////////////////////////_TASK8_///////////////////////////
+8)
 
 var mapFunc = function () {
     var arr = this.order_Items_ID;
@@ -130,7 +130,7 @@ db.orders.mapReduce(
     }
 );
   
-////////////////////////_TASK9_///////////////////////////
+9)
 
 var mapFunc = function () {
     var arr = this.order_Items_ID;
