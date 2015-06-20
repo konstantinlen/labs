@@ -1,0 +1,190 @@
+////////////////////////_TASK1_///////////////////////////
+
+var mapFunc = function () {
+        emit(this.producer,1)
+    }
+    
+var reduceFunc = function (key,val) {
+        return Array.sum(val);
+    }
+
+db.goods.mapReduce(
+    mapFunc,
+    reduceFunc,
+    { out : "mrResult"}
+);
+
+////////////////////////_TASK2_///////////////////////////
+same as previous but 
+emit(this.producer,this.price)
+
+////////////////////////_TASK3_///////////////////////////
+same as previous but 
+var mapFunc = function () {
+        emit(this.customer.name,this.totalSum)
+    }
+
+////////////////////////_TASK4_///////////////////////////
+same as previous but 
+db.orders.mapReduce(
+    mapFunc,
+    reduceFunc,
+    { out : "mrResult",
+      query:
+        { 
+            date:
+                { 
+                    $gt: ISODate('2015-03-01T'),
+                    $lt: ISODate('2015-05-01T') 
+                }
+        }
+    }
+);
+
+////////////////////////_TASK5_///////////////////////////
+var mapFunc = function () {
+        emit(1,this.totalSum)
+    }
+    
+var reduceFunc = function (key,val) {
+        return Array.sum(val) / val.length ;
+    }
+
+
+////////////////////////_TASK6_///////////////////////////
+var mapFunc = function () {
+    var arr = this.order_Items_ID;
+        arr.forEach( function (item,i,arr) {
+                emit (item.id,1);
+            });
+    }
+    
+var reduceFunc = function (key,val) {
+        return Array.sum(val);
+    }
+
+////////////////////////_TASK7_///////////////////////////
+
+var mapFunc = function () {
+    var arr = this.order_Items_ID;
+    var customer = this.customer.name;
+        arr.forEach( function (item,i){
+                emit(item.id, customer);
+            });
+    }
+      
+var reduceFunc = function (key,val) {
+        
+        return val.toString(); 
+    }
+    
+var finalizeFunc = function(key, rVal){
+        var arr = rVal.split(",");
+        return Array.unique(arr);
+    }
+
+db.orders.mapReduce(
+    mapFunc,
+    reduceFunc,
+    { out : "mrResult",
+      finalize : finalizeFunc 
+    }
+);
+
+////////////////////////_TASK8_///////////////////////////
+
+var mapFunc = function () {
+    var arr = this.order_Items_ID;
+    var customer = this.customer.name;
+        arr.forEach( function (item,i){
+                emit(item.id, customer);
+            });
+    }
+      
+var reduceFunc = function (key,val) {
+        
+        return val.toString(); 
+    }
+    
+var finalizeFunc = function(key, rVal){
+        var arr = rVal.split(",");
+        var res = [];
+    for (var i = 0; i < arr.length; i++){
+        for (var j = i + 1; j < arr.length; j++){
+                if (arr[i] === arr[j]){
+                        res.push(arr[i]);
+                    }
+            }
+        }
+        
+    
+        return Array.unique(res);
+    }
+
+db.orders.mapReduce(
+    mapFunc,
+    reduceFunc,
+    { out : "mrResult",
+        finalize : finalizeFunc
+        
+    }
+);
+  
+////////////////////////_TASK9_///////////////////////////
+
+var mapFunc = function () {
+    var arr = this.order_Items_ID;
+    var customer = this.customer.name;
+        arr.forEach( function (item,i){
+                emit(1, item.id);
+            });
+    }
+      
+var reduceFunc = function (key,val) {
+        
+        return val.toString();  
+    }
+    
+var finalizeFunc = function(key, rVal){
+         var N = 4;
+         var arr = rVal.split(",");
+         var uniques = Array.unique(arr);
+         var res = [];
+         var count = 0;
+     for (var i = 0; i < uniques.length; i++){
+            
+         for (var j = 0; j < arr.length; j++){
+                 
+             if (uniques[i] == arr[j]){
+                      count++;   
+                     }
+             }
+            
+            res[i] = [];
+            res[i][0] = uniques[i];
+            res[i][1] = count;
+             
+            count = 0;
+         }
+    var count = res.length-1;
+    for (var i = 0; i < count; i++)
+     for (var j = 0; j < count-i; j++)
+        if (res[j][1]< res[j+1][1]) {
+           var max = res[j][1];
+           res[j][1] = res[j+1][1];
+           res[j+1][1] = max;
+        }
+
+    
+        return res.slice(0, N*2);
+    }
+
+db.orders.mapReduce(
+    mapFunc,
+    reduceFunc,
+    { out : "mrResult",
+        finalize : finalizeFunc
+        
+    }
+);
+

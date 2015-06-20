@@ -1,0 +1,149 @@
+{
+    "_id" : ObjectId("55414012d83ca7aefbad8aa5"),
+    "category" : "Phone",
+    "model" : "Nokia N81",
+    "Producer" : "Nokia",
+    "Price" : 800
+}
+
+3) db.items.find({Price:{$gt:1000, $lt:2500}})
+
+4) db.items.count({"Producer":"Nokia"})
+
+5) db.items.aggregate({$group:{_id : "$Producer", total: {$sum:1}}})
+
+6) db.persons.update({"customer.name":"D"}, {"customer.name":"Drth"}, {upsert: true})
+
+
+************
+
+{
+    "_id" : ObjectId("554168c14409f9ed285b7e7c"),
+    "order_number" : 1,
+    "total_sum" : 1600,
+    "customer" : {
+        "name" : "D",
+        "surname" : "B",
+        "phone" : 123457,
+        "address" : "Kyiv"
+    },
+    "payment" : {
+        "card_owner" : "D B",
+        "cardId" : 121212
+    },
+    "order_items_id" : [ 
+        {
+            "$ref" : "items",
+            "$id" : ObjectId("55414012d83ca7aefbad8aa5")
+        }, 
+        {
+            "$ref" : "items",
+            "$id" : ObjectId("55414012d83ca7aefbad8aa5")
+        }
+    ]
+}
+
+
+
+2) db.orders.find()
+
+3) db.orders.find({total_sum:{$gt:1000}})
+
+4) db.orders.find({"customer.name":"D"})
+
+5) db.orders.find({"total_sum":{$gt:2000}}, {"payment.card_owner":1, "payment.cardId":1})
+
+6) db.orders.update({"customer.name":"D"}, {$pop:{order_items_id:1}})
+
+7) db.persons.update({"customer.name":"D"}, {"customer.name":"Drth"}, {upsert: true})
+
+
+
+http://metanit.com/nosql/mongodb/2.9.php
+
+http://stackoverflow.com/questions/21592060/mongodb-manual-references-example
+
+
+
+
+
+
+гит
+
+
+Создание Git-репозитория
+
+$ git init
+
+git add - если папка не пустая (Если вы хотите добавить под версионный контроль существующие файлы (в отличие от пустого каталога), вам стоит проиндексировать эти файлы и осуществить первый коммит изменений. )
+
+$ git commit -m 'initial project version'
+
+$ git clone https://github.com/libgit2/libgit2
+
+
+вносить изменения, просматривать изменения, отменять изменения
+
+
+$ git status
+
+для теста
+$ echo 'My Project' > README
+$ git status
+
+http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-Recording-Changes-to-the-Repository
+
+git diff - детальный просмотр
+
+$ git diff --staged
+
+$ git commit -m "Story 182: Fix benchmarks for speed"
+
+$ rm PROJECTS.md - удалить
+
+$ git mv file_from file_to - перемещать/переименовывать
+
+
+Просматривать историю изменений, выводить граф изменений
+
+
+http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-%D0%9F%D1%80%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D0%B8-%D0%BA%D0%BE%D0%BC%D0%BC%D0%B8%D1%82%D0%BE%D0%B2
+
+$ git log
+
+$ git log -p -2
+
+$ git log --stat
+
+$ git log --pretty=format:"%h %s" --graph
+
+
+отменять изменения
+
+
+http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D0%BE%D1%82%D0%BC%D0%B5%D0%BD%D1%8B
+
+$ git commit --amend
+
+
+пример - Например, если вы фиксируете изменения, и понимаете, что забыли проиндексировать изменения в файле, который хотели включить в коммит, можно сделать примерно так:
+$ git commit -m 'initial commit'
+$ git add forgotten_file
+$ git commit --amend
+
+В итоге получится единый коммит — второй коммит заменит результаты первого.
+
+$ git add .
+$ git status
+$ git reset HEAD <file>...
+
+$ git checkout -- CONTRIBUTING.md
+
+
+удаленные репрозитории
+
+git fetch — забрать изменения удаленной ветки из репозитория по умолчания, основной ветки; той, которая была использована при клонировании репозитория. Изменения обновят удаленную ветку (remote tracking branch), после чего надо будет провести слияние с локальной ветку командой git merge.
+Команда git pull сразу забирает изменения и проводит слияние с активной веткой.
+
+http://git-scm.com/book/ru/v2/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git-Working-with-Remotes
+http://git-scm.com/book/ru/v2/%D0%92%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-Git-%D0%9E-%D0%B2%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B8-%D0%B2-%D0%B4%D0%B2%D1%83%D1%85-%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%85
